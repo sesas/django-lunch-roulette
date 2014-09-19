@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<strong> Authentication Info: </strong>
+	<ul>
+		<li>Authenticated: {{ user.is_authenticated }}</li>
+		<li>Username: {{ user }}</li>
+	</ul>
+
+
+	{% if next_url %}
+    <br>
+	    <div>
+			<p>
+			    Would you like to send the following data to <b>{{ next_url }}</b>?
+			</p>
+		</div>
+	{% endif %}
+
+	{% if my_formset %}
+	    {% crispy my_formset my_formset.helper %}
+	{% endif %}
+{% endblock content %}
