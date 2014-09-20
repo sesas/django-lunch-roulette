@@ -12,10 +12,10 @@ from django.conf import settings
 
 class Participant(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL)
-	is_participating = models.BooleanField('is this person actively rouletting', default=True)
+	is_participating = models.BooleanField('Participate?', default=True)
 
 	def __unicode__(self):
-		return '{} {}'.format(self.user, self.is_participating)
+		return u'{} {}'.format(self.user.email, self.is_participating)
 
 
 class LunchGroup(models.Model):
@@ -23,8 +23,9 @@ class LunchGroup(models.Model):
     participants = models.ManyToManyField(Participant)
 
     def __unicode__(self):
+    	# participants_str = 'some participants'
     	participants_str = ',\n\t'.join([str(part) for part in self.participants.all()])
-    	return "{date}:\n\t{participants_str}".format(date=self.date, 
+    	return u"{date}:\n\t{participants_str}".format(date=self.date, 
     												  participants_str=participants_str)
 
     class Meta:

@@ -2,6 +2,23 @@
 
 {% load crispy_forms_tags %}
 
+{% block extra_head %}
+
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+{% endblock %}
+
+
 {% block content %}
 	<strong> Authentication Info: </strong>
 	<ul>
@@ -12,4 +29,10 @@
 	{% if my_formset %}
 	    {% crispy my_formset my_formset.helper %}
 	{% endif %}
+
+	<script>
+	  $(function() {
+	    $( “.dateinput" ).datepicker();
+	  });
+	</script>
 {% endblock content %}
