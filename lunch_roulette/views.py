@@ -12,11 +12,10 @@ from . import forms
 
 # Create your views here.
 def join(request):
-    # import pdb; pdb.set_trace()
     try:
         participant = request.user.participant
     except models.Participant.DoesNotExist:
-        participant = model.Participant(user=request.user)
+        participant = models.Participant(user=request.user)
     form = forms.ParticipantForm(instance=participant)
     context = {'user': request.user, 
                'my_formset': form}
