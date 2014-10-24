@@ -29,7 +29,7 @@ setup(
     author='Gabriel Reyla, Henry Zhu, Jessica S',
     author_email='gabreyla@gmail.com',
     packages = ['lunch_roulette'],
-    install_requires=['Django', 'djangorestframework', 'crispy_forms'],
+    install_requires=['Django', 'djangorestframework', 'django-crispy_forms'],
     classifiers=[
         'Intended Audience :: Lunch Eaters :: Organizations :: Employees :: Fun :: Social Eating',
         'Programming Language :: Python',
