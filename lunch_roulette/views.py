@@ -12,10 +12,13 @@ from . import forms
 
 # Create your views here.
 def join(request):
+    # import pdb; pdb.set_trace()
+
     try:
         participant = request.user.participant
     except models.Participant.DoesNotExist:
         participant = models.Participant(user=request.user)
+        participant.save()
     form = forms.ParticipantForm(instance=participant)
     context = {'user': request.user, 
                'my_formset': form}
@@ -31,7 +34,6 @@ def join(request):
                 
         return redirect(join)
 
-        # return render(request, 'lunch_roulette/base.html', context)
 
 def roll(request):
     form = forms.LunchGroupForm
