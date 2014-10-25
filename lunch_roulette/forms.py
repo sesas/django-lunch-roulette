@@ -39,7 +39,6 @@ class ParticipantForm(forms.ModelForm):
         fields = ['is_participating',]
 
 
-
 class LunchGroupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LunchGroupForm, self).__init__(*args, **kwargs)

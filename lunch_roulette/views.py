@@ -4,6 +4,7 @@ import random
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth import get_user_model
+from django.forms.models import modelformset_factory
 
 import toolz
 
@@ -14,33 +15,40 @@ from . import forms
 def join(request):
     # import pdb; pdb.set_trace()
 
+    # The following try/except block should probably be 
+    # in a signal receiver for newly created User objects
     try:
         participant = request.user.participant
     except models.Participant.DoesNotExist:
         participant = models.Participant(user=request.user)
         participant.save()
-    form = forms.ParticipantForm(instance=participant)
-    context = {'user': request.user, 
-               'my_formset': form}
     
     if request.method == 'GET':
+        form = forms.ParticipantForm(request.GET)
+        context = {'form': form}
         return render(request, 'lunch_roulette/base.html', context)
 
     if request.method == 'POST':
-        if request.REQUEST.get('is_participating') == 'on':
-            participant.is_participating = True
-        else: 
-            participant.is_participating = False
+        form = forms.ParticipantForm(request.POST, instance=participant)
+        if form.is_valid():
+            model_instance = form.save()
+        # if request.REQUEST.get('is_participating') == 'on':
+        #     participant.is_participating = True
+        # else: 
+        #     participant.is_participating = False
                 
         return redirect(join)
 
 
 def roll(request):
     form = forms.LunchGroupForm
-    context = {'user': request.user, }
 
     if request.method == 'GET':
-        context += {'my_formset': form()}
+        ParticipantFormset = modelformset_factory(models.Participant)
+        formset = ParticipantFormset(queryset=models.Participant.objects.filter(is_participating=True))
+        context = {'form': form(), 
+                    'formset': formset
+                    }
         return render(request, 'lunch_roulette/base.html', context)
 
     if request.method == 'POST':

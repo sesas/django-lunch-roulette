@@ -20,14 +20,20 @@
 
 
 {% block content %}
-	<strong> Authentication Info: </strong>
-	<ul>
-		<li>Authenticated: {{ user.is_authenticated }}</li>
-		<li>Username: {{ user }}</li>
-	</ul>
+	{% if user.is_superuser %}
+		<strong> Authentication Info: </strong>
+		<ul>
+			<li>Authenticated: {{ user.is_authenticated }}</li>
+			<li>Username: {{ user }}</li>
+		</ul>
+	{% endif %}
 
-	{% if my_formset %}
-	    {% crispy my_formset my_formset.helper %}
+	{% if formset %}
+	    {% crispy formset %}
+	{% endif %}
+
+	{% if form %}
+	    {% crispy form form.helper %}
 	{% endif %}
 
 	<script>
